@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cura Companion AI Clinic</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .tab-btn.active {
+    background-color: #3b82f6; /* Tailwind blue-500 */
+    color: #fff;
+  }
+  /* Loading spinner */
+  .loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3490dc;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+</head>
+<body class="bg-gradient-to-r from-blue-100 to-blue-200 min-h-screen flex">
+
+<!-- Sidebar -->
+<div class="w-64 bg-white shadow-lg flex flex-col">
+  <h1 class="text-2xl font-bold text-center p-4 border-b">Cura Companion</h1>
+  <nav class="flex flex-col p-4 space-y-2">
+    <button onclick="showTab('dashboard')" id="btn-dashboard" class="tab-btn p-2 rounded hover:bg-blue-300 transition">🏠 Dashboard</button>
+    <button onclick="showTab('diabetes')" id="btn-diabetes" class="tab-btn p-2 rounded hover:bg-blue-300 transition">💉 Diabetes</button>
+    <button onclick="showTab('heart')" id="btn-heart" class="tab-btn p-2 rounded hover:bg-red-300 transition">❤ Heart</button>
+    <button onclick="showTab('neurotap')" id="btn-neurotap" class="tab-btn p-2 rounded hover:bg-green-300 transition">🧠 NeuroTaps</button>
+  </nav>
+</div>
+
+<!-- Main Content -->
+<div class="flex-1 p-8 space-y-6">
+
+  <!-- Dashboard -->
+  <div id="dashboard" class="tab-content hidden bg-white shadow-lg rounded p-6 text-center">
+    <h2 class="text-3xl font-bold mb-6 text-blue-700">Welcome to Cura Companion AI Clinic</h2>
+    <p class="text-lg mb-4">Your personal AI health assistant. Predict and monitor your health with ease.</p>
+    <div class="flex justify-center space-x-4">
+      <div class="bg-blue-100 p-6 rounded shadow hover:scale-105 transition cursor-pointer" onclick="showTab('diabetes')">
+        💉 <p class="mt-2 font-semibold">Diabetes</p>
+      </div>
+      <div class="bg-red-100 p-6 rounded shadow hover:scale-105 transition cursor-pointer" onclick="showTab('heart')">
+        ❤ <p class="mt-2 font-semibold">Heart</p>
+      </div>
+      <div class="bg-green-100 p-6 rounded shadow hover:scale-105 transition cursor-pointer" onclick="showTab('neurotap')">
+        🧠 <p class="mt-2 font-semibold">NeuroTaps</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diabetes Tab -->
+  <div id="diabetes" class="tab-content hidden bg-white shadow-lg rounded p-6">
+    <h2 class="text-2xl font-bold mb-4 text-blue-700">Diabetes Prediction</h2>
+    <form id="diabetesForm" class="grid grid-cols-2 gap-4">
+      <input type="number" name="Pregnancies" placeholder="Pregnancies" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <input type="number" name="Glucose" placeholder="Glucose" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <input type="number" name="BloodPressure" placeholder="Blood Pressure" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <input type="number" name="SkinThickness" placeholder="Skin Thickness" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <input type="number" name="Insulin" placeholder="Insulin" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <input type="number" name="BMI" step="0.01" placeholder="BMI" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <input type="number" name="DiabetesPedigreeFunction" step="0.01" placeholder="DP Function" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <input type="number" name="Age" placeholder="Age" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <button type="submit" class="col-span-2 bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition">Predict <span id="diabetesLoader" class="loader hidden"></span></button>
+    </form>
+    <div id="diabetesResult" class="mt-4 text-lg font-semibold text-blue-700"></div>
+  </div>
+
+  <!-- Heart Tab -->
+  <div id="heart" class="tab-content hidden bg-white shadow-lg rounded p-6">
+    <h2 class="text-2xl font-bold mb-4 text-red-600">Heart Prediction</h2>
+    <form id="heartForm" class="grid grid-cols-2 gap-4">
+      <input type="number" name="age" placeholder="Age" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+      <input type="number" name="sex" placeholder="Sex (0=F, 1=M)" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+      <input type="number" name="cp" placeholder="Chest Pain Type (cp)" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+      <input type="number" name="trestbps" placeholder="Resting BP (trestbps)" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+      <input type="number" name="chol" placeholder="Cholesterol (chol)" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+      <input type="number" name="fbs" placeholder="Fasting Blood Sugar (fbs)" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+      <input type="number" name="restecg" placeholder="Rest ECG (restecg)" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+      <input type="number" name="thalach" placeholder="Max Heart Rate (thalach)" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+      <input type="number" name="exang" placeholder="Exercise Induced Angina (exang)" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+      <input type="number" name="oldpeak" step="0.01" placeholder="Oldpeak" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+      <input type="number" name="slope" placeholder="Slope" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+      <input type="number" name="ca" placeholder="CA" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+      <input type="number" name="thal" placeholder="Thal" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+      <button type="submit" class="col-span-2 bg-red-500 text-white p-2 rounded hover:bg-red-600 transition">Predict <span id="heartLoader" class="loader hidden"></span></button>
+    </form>
+    <div id="heartResult" class="mt-4 text-lg font-semibold text-red-600"></div>
+  </div>
+
+  <!-- NeuroTaps Tab -->
+  <div id="neurotap" class="tab-content hidden bg-white shadow-lg rounded p-6">
+    <h2 class="text-2xl font-bold mb-4 text-green-700">NeuroTaps Analysis</h2>
+    <form id="neurotapForm" class="grid grid-cols-2 gap-4">
+      <input type="number" name="avg_key_latency" placeholder="Avg Key Latency" step="0.01" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400">
+      <input type="number" name="error_rate" placeholder="Error Rate" step="0.0001" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400">
+      <input type="number" name="backspace_rate" placeholder="Backspace Rate" step="0.0001" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400">
+      <input type="number" name="typing_speed" placeholder="Typing Speed" step="0.01" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400">
+      <input type="number" name="session_duration" placeholder="Session Duration (minutes)" step="0.01" required class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400">
+      <button type="submit" class="col-span-2 bg-green-500 text-white p-2 rounded hover:bg-green-600 transition">Predict <span id="neurotapLoader" class="loader hidden"></span></button>
+    </form>
+    <div id="neurotapResult" class="mt-4 text-lg font-semibold text-green-700"></div>
+  </div>
+
+</div>
+
+<script>
+  // Tab switching
+  function showTab(tabId){
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    const tab = document.getElementById(tabId);
+    if(tab) tab.classList.remove('hidden');
+    const btn = document.getElementById(`btn-${tabId}`);
+    if(btn) btn.classList.add('active');
+  }
+
+  // POST helper
+  async function postData(url = '', data = {}) {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    });
+    return response.json();
+  }
+
+  function parseFormData(form){
+    const obj = {};
+    for(let [key, value] of new FormData(form).entries()){
+      obj[key] = value.includes('.') ? parseFloat(value) : parseInt(value);
+    }
+    return obj;
+  }
+
+  async function handlePrediction(formId, resultId, url, loaderId){
+    const form = document.getElementById(formId);
+    const resultDiv = document.getElementById(resultId);
+    const loader = document.getElementById(loaderId);
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = parseFormData(form);
+      loader.classList.remove('hidden');
+      resultDiv.innerText = '';
+      try {
+        const result = await postData(url, data);
+        if(result && typeof result.Prediction !== 'undefined') {
+          resultDiv.innerText = `Result: ${result.result} (Prediction: ${result.Prediction})`;
+        } else if(result && typeof result.result !== 'undefined') {
+          resultDiv.innerText = `Result: ${result.result}`;
+        } else {
+          resultDiv.innerText = 'No prediction result.';
+        }
+      } catch(err) {
+        resultDiv.innerText = 'Error: Could not fetch prediction.';
+      }
+      loader.classList.add('hidden');
+    });
+  }
+
+  handlePrediction('diabetesForm','diabetesResult','http://127.0.0.1:8000/diabetes/predict_diabetes','diabetesLoader');
+  handlePrediction('heartForm','heartResult','http://127.0.0.1:8000/heart/predict_heart','heartLoader');
+  handlePrediction('neurotapForm','neurotapResult','http://127.0.0.1:8000/neurotap/predict_neurotap','neurotapLoader');
+
+  // Default tab
+  document.addEventListener('DOMContentLoaded', () => {
+    showTab('dashboard');
+  });
+</script>
+</body>
+</html>
