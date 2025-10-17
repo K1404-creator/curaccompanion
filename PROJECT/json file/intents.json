@@ -1,0 +1,36 @@
+{"intents": [
+        {"tag": "greeting",
+         "patterns": ["Hi", "Hello", "Hey", "Good day", "Greetings"],
+         "responses": ["Hello! Welcome to CuraCompanion. How can I assist you with your health queries today?"],
+         "context_set": ""
+        },
+        {"tag": "goodbye",
+         "patterns": ["Goodbye", "See you later", "Bye", "Thanks, that's all"],
+         "responses": ["Thank you for visiting CuraCompanion. Stay healthy!"],
+         "context_set": ""
+        },
+        {"tag": "about_website",
+         "patterns": ["What is this website about?", "Tell me about CuraCompanion", "What do you do?", "Purpose of this site"],
+         "responses": ["CuraCompanion is a health analytics platform that provides risk predictions for diabetes, heart disease, and neurological conditions, along with a health-focused chatbot for your queries."]
+        },
+        {"tag": "services",
+         "patterns": ["What services do you offer?", "What can I do here?", "Features of this website", "What predictions can I get?"],
+         "responses": ["You can get risk predictions for diabetes, heart disease, and neurological conditions. You can also chat with me for health-related information and guidance."]
+        },
+        {"tag": "how_to_use",
+         "patterns": ["How do I use this website?", "How to get a prediction?", "How does it work?"],
+         "responses": ["Simply enter your health details in the relevant section and submit. The system will analyze your data and provide a risk prediction. You can also ask me health-related questions anytime."]
+        },
+        {"tag": "privacy",
+         "patterns": ["Is my data safe?", "How is my information used?", "Privacy policy", "Is my information confidential?"],
+         "responses": ["Your data is processed securely and is not shared with third parties. We value your privacy and confidentiality."]
+        },
+        {"tag": "contact",
+         "patterns": ["How can I contact support?", "I need help", "Contact information", "Support"],
+         "responses": ["For support, please use the contact form on our website or email us at support@curacompanion.com."]
+        },
+        {"tag": "default",
+         "patterns": [],
+         "responses": ["I'm here to help with questions about CuraCompanion and its health services. Please ask something related to this website."]
+        }
+]}

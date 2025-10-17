@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cura Companion — AI Clinic</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">🩺</div>
+        <div>
+          <h1>Cura Companion</h1>
+          <p class="muted">AI Clinic</p>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-btn active" data-target="dashboard">Dashboard</button>
+        <button class="nav-btn" data-target="diabetes">Diabetes</button>
+        <button class="nav-btn" data-target="heart">Heart</button>
+        <button class="nav-btn" data-target="neurotap">NeuroTaps</button>
+        <button class="nav-btn" data-target="chat">Chat</button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <small class="muted">v1 • Demo</small>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- DASHBOARD -->
+      <section id="dashboard" class="page active">
+        <div class="row">
+          <div class="card large">
+            <div class="card-head">
+              <h2>Overall Health Score</h2>
+              <small class="muted">Aggregate risk assessment</small>
+            </div>
+            <div class="card-body center">
+              <div class="gauge">
+                <div id="healthScore" class="gauge-value">—</div>
+                <div class="muted">Health Score (0 - 100)</div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <h3>Quick Actions</h3>
+              <div class="quick-grid">
+                <div class="quick" onclick="showPage('diabetes')">💉 Diabetes</div>
+                <div class="quick" onclick="showPage('heart')">❤ Heart</div>
+                <div class="quick" onclick="showPage('neurotap')">🧠 NeuroTaps</div>
+                <div class="quick" onclick="showPage('chat')">💬 Chatbot</div>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Recent Predictions</h3>
+              <div id="history" class="muted">No history yet — run predictions to see results here.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DIABETES -->
+      <section id="diabetes" class="page">
+        <div class="page-head">
+          <h2>Diabetes Risk</h2>
+          <p class="muted">Enter patient metrics to predict diabetes risk.</p>
+        </div>
+        <div class="row">
+          <div class="card">
+            <form id="diabetesForm" class="form-grid">
+              <label>
+                <span>Pregnancies
+                  <span class="helper" title="Number of times you've been pregnant (women only)">?</span>
+                </span>
+                <input type="number" name="Pregnancies" required>
+              </label>
+              <label>
+                <span>Glucose
+                  <span class="helper" title="Blood sugar level; from a blood test (mg/dL)">?</span>
+                </span>
+                <input type="number" name="Glucose" required>
+              </label>
+              <label>
+                <span>Blood Pressure
+                  <span class="helper" title="Diastolic (lower) blood pressure (mm Hg)">?</span>
+                </span>
+                <input type="number" name="BloodPressure" required>
+              </label>
+              <label>
+                <span>Skin Thickness
+                  <span class="helper" title="Triceps skinfold thickness (mm), measured by calipers">?</span>
+                </span>
+                <input type="number" name="SkinThickness" required>
+              </label>
+              <label>
+                <span>Insulin
+                  <span class="helper" title="Serum insulin level after a glucose test (mu U/ml)">?</span>
+                </span>
+                <input type="number" name="Insulin" required>
+              </label>
+              <label>
+                <span>BMI
+                  <span class="helper" title="Body Mass Index; weight (kg) / [height (m)]²">?</span>
+                </span>
+                <input type="number" step="0.01" name="BMI" required>
+              </label>
+              <label>
+                <span>Diabetes Pedigree Function
+                  <span class="helper" title="Score for genetic/family diabetes risk">?</span>
+                </span>
+                <input type="number" step="0.01" name="DiabetesPedigreeFunction" required>
+              </label>
+              <label>
+                <span>Age
+                  <span class="helper" title="Your age (in years)">?</span>
+                </span>
+                <input type="number" name="Age" required>
+              </label>
+              <div class="form-actions">
+                <button type="submit" class="btn primary">Predict</button>
+                <div id="diabetesSpinner" class="spinner hidden"></div>
+              </div>
+            </form>
+            <div class="result" id="diabetesResult"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HEART -->
+      <section id="heart" class="page">
+        <div class="page-head">
+          <h2>Heart Disease Risk</h2>
+          <p class="muted">Provide inputs and get a risk classification.</p>
+        </div>
+        <div class="row">
+          <div class="card">
+            <form id="heartForm" class="form-grid">
+              <label><span>Age <span class="helper" title="Your age in years">?</span></span>
+                <input type="number" name="age" required>
+              </label>
+              <label><span>Sex (0=F,1=M) <span class="helper" title="0 for female, 1 for male">?</span></span>
+                <input type="number" name="sex" required>
+              </label>
+              <label><span>Chest Pain Type <span class="helper" title="Type of chest pain (0-3); ask your doctor if unsure">?</span></span>
+                <input type="number" name="cp" required>
+              </label>
+              <label><span>Resting BP <span class="helper" title="Resting blood pressure (mm Hg)">?</span></span>
+                <input type="number" name="trestbps" required>
+              </label>
+              <label><span>Cholesterol <span class="helper" title="Serum cholesterol (mg/dl)">?</span></span>
+                <input type="number" name="chol" required>
+              </label>
+              <label><span>Fasting BS <span class="helper" title="Fasting blood sugar >120 mg/dl (1=yes, 0=no)">?</span></span>
+                <input type="number" name="fbs" required>
+              </label>
+              <label><span>Rest ECG <span class="helper" title="Resting electrocardiographic result (0-2)">?</span></span>
+                <input type="number" name="restecg" required>
+              </label>
+              <label><span>Max HR <span class="helper" title="Max heart rate achieved during test">?</span></span>
+                <input type="number" name="thalach" required>
+              </label>
+              <label><span>Exercise Angina <span class="helper" title="Exercise-induced angina (1=yes, 0=no)">?</span></span>
+                <input type="number" name="exang" required>
+              </label>
+              <label><span>Oldpeak <span class="helper" title="ST depression induced by exercise">?</span></span>
+                <input type="number" step="0.01" name="oldpeak" required>
+              </label>
+              <label><span>Slope <span class="helper" title="Slope of the peak exercise ST segment (0-2)">?</span></span>
+                <input type="number" name="slope" required>
+              </label>
+              <label><span>CA <span class="helper" title="Major vessels colored by fluoroscopy (0-3)">?</span></span>
+                <input type="number" name="ca" required>
+              </label>
+              <label><span>Thal <span class="helper" title="3=normal, 6=fixed defect, 7=reversible defect">?</span></span>
+                <input type="number" name="thal" required>
+              </label>
+              <div class="form-actions">
+                <button type="submit" class="btn danger">Predict</button>
+                <div id="heartSpinner" class="spinner hidden"></div>
+              </div>
+            </form>
+            <div class="result" id="heartResult"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEUROTAPS -->
+      <section id="neurotap" class="page">
+        <div class="page-head">
+          <h2>NeuroTaps — Cognitive & Fatigue</h2>
+          <p class="muted">Typing & session metrics predict fatigue level.</p>
+        </div>
+        <div class="row">
+          <div class="card">
+            <form id="neurotapForm" class="form-grid">
+              <label><span>Avg Key Latency <span class="helper" title="Mean time between keypresses (ms)">?</span></span>
+                <input type="number" step="0.01" name="avg_key_latency" required>
+              </label>
+              <label><span>Error Rate <span class="helper" title="Share of incorrect key presses">?</span></span>
+                <input type="number" step="0.0001" name="error_rate" required>
+              </label>
+              <label><span>Backspace Rate <span class="helper" title="How often backspace is used (errors)">?</span></span>
+                <input type="number" step="0.0001" name="backspace_rate" required>
+              </label>
+              <label><span>Typing Speed <span class="helper" title="Words or characters per minute">?</span></span>
+                <input type="number" step="0.01" name="typing_speed" required>
+              </label>
+              <label><span>Session Duration (minutes) <span class="helper" title="Minutes spent in this typing session">?</span></span>
+                <input type="number" step="0.01" name="session_duration" required>
+              </label>
+              <div class="form-actions">
+                <button type="submit" class="btn success">Predict</button>
+                <div id="neurotapSpinner" class="spinner hidden"></div>
+              </div>
+            </form>
+            <div class="result" id="neurotapResult"></div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- CHAT PAGE -->
+      <section id="chat" class="page">
+        <div class="page-head">
+          <h2>AI Chat Assistant</h2>
+          <p class="muted">Ask your health or general questions below.</p>
+        </div>
+        <div class="row">
+          <div class="card" style="width:100%">
+            <div class="chat-body">
+              <div id="chatMessages" class="chat-messages"></div>
+            </div>
+            <div class="chat-footer" style="display:flex;gap:8px">
+              <input id="chatInput" placeholder="Type a message..." style="flex:1"/>
+              <button id="sendChat" class="btn primary">Send</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
